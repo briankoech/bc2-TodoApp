@@ -13,7 +13,7 @@ $("#btnSave").click(function() {
 	var actionDate = "10-10-2013";
 	var reminderDate = "10-10-2013";
 
-// May use push insted of set
+// May use push instead of set
 	myDataRef.push(
 	{
 		taskId : taskId,
@@ -37,12 +37,13 @@ $("#btnSave").click(function() {
 
 var wait = myDataRef.on('child_added', function(snapshot) {
 		var mytask = snapshot.val();
+		console.log(mytask);
 		displayTask(mytask.taskTitle, mytask.taskDescription);	
 });
 
 function displayTask(title, desc) {
-	// $("#high").prepend("<a href="#" class="list-group-item">"+ title+"</a>");
-	console.log("Title: " + title + " Descreption: " + desc);
+	$("#tab1").prepend('<a href="#" class="list-group-item">'+ title+' <p> '+ desc+'</p>'+'</a>');
+	console.log("Title: " + title + " Discreption: " + desc);
 }
 
 wait;
