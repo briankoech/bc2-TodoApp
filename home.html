@@ -1,11 +1,13 @@
 <html>
 <head>
-	<title>Login Page</title>
+	<title>Todo App</title>
 	<link rel="stylesheet" type="text/css" href="css/tabs.css">
 	<link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap-glyphicons.css">
 	<link rel="stylesheet" type="text/css" href="libs/font-awesome-4.4.0/css/font-awesome.css">
+	<link rel="stylesheet" type="text/css" href="libs/jqtimepicker/jquery.datetimepicker.css">
 	<script src="libs/jquery-ui.1.11.4.custom/jquery-ui.min.css"></script>
+
 	
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
@@ -55,7 +57,7 @@
 			        <h4 class="modal-title" id="myModalLabel">New Task</h4>
 			      </div>
 			      <div class="modal-body">
-			        <form>
+			        <form id="taskForm">
 			        	<div class="form-group">
 						    <label for="taskTitle">Task Title</label>
 						    <input type="text" class="form-control" id="taskTitle" placeholder="Title">
@@ -65,22 +67,22 @@
 						    <textarea type="text" class="form-control" id="taskDescription" rows="3" placeholder="Description"></textarea>
 						 </div>
 						 <div class="form-group">
-						    <label for="priority">Priority</label>
-						    <input type="text" class="form-control" id="priority" placeholder="Priority"> 
-						 </div>
-						  <div class="form-group">
-						    <label for="taskDate">Task Date</label>
-						    
-						    <span class="input-group-addon">
-							    <input type="text" class="form-control" id="taskDate" placeholder="Task Date">
-	                        	<i class="fa fa-calendar"></i>
-                    		</span>
-						    						    
+						    <label class="radio-inline"><input class="priorityCB" type="radio" name="optradio" value="1">High Priority</label>
+							<label class="radio-inline"><input class="priorityCB" type="radio" name="optradio" value="2">Medium Priority</label>
+							<label class="radio-inline"><input class="priorityCB" type="radio" name="optradio" value="3">Low Priority</label> 
 						 </div>
 
-						  <div class="form-group reminder">
+						  <div class="form-group">
+						    <label for="taskDate">Task Date</label>
+						    <input id="taskDate" type="text"  class="form-control datetimepicker">
+						       						    
+						 </div>
+						 <div class="form-group">
+						 	  <label for="remCB"><input type="checkbox" name="remCB" id="remCB"> Set Reminder</label>
+						 </div>
+						  <div class="form-group" id="reminder">
 						    <label for="reminder">Reminder Date & Time</label>
-						    <input type="text" class="form-control" id="reminder" placeholder="Reminder Time">
+						    <input type="text" class="form-control datetimepicker" id="remDate" placeholder="Reminder Time">
 						 </div>
 			        </form>
 			      </div>
@@ -114,50 +116,19 @@
 					<div class="tab-content">
 						<div class="tab-pane active" id="tab1">
 							<div class="list-group">
-							  <a href="#" class="list-group-item">Go to church</a>
-							  <a href="#" class="list-group-item">buy vegetables</a>
-							  <a href="#" class="list-group-item">visit Antie</a>
-							  <a href="#" class="list-group-item">Do some laundry</a>
-							  <a href="#" class="list-group-item">wash dishes</a>
-							  <a href="#" class="list-group-item">Call Nancy</a>
+							  <a href="#" class="list-group-item taskItem">high </a>
 							</div>
 							
 						</div>
 						<div class="tab-pane" id="tab2">
-							<p>
-								hey, I'm in Tab 2.
-							</p>
-							<p>
-								some data
-							</p>
-							
+							<div class="list-group">
+							  <a href="#" class="list-group-item taskItem">mid </a>
+							</div>
 						</div>
 						<div class="tab-pane" id="tab3">
-							<p>
-								hey, I'm in Tab 3.
-							</p>
-							<p>
-								third tab data
-							</p>
-							
-						</div>
-						<div class="tab-pane" id="tab4">
-							<p>
-								hey, I'm in Tab 4.
-							</p>
-							<p>
-								fourth tab
-							</p>
-							
-						</div>
-						<div class="tab-pane" id="tab5">
-							<p>
-								hello, I'm in Tab 5.
-							</p>
-							<p>
-								least priority
-							</p>
-							
+							<div class="list-group">
+							  <a href="#" class="list-group-item taskItem">low </a>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -173,9 +144,11 @@
 	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script> 
+	 <script src="libs/jqtimepicker/jquery.datetimepicker.js"></script>
 	 <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
 	<!--  // <script src="libs/bootstrap/bootstrap.min.js"></script>
 	 // <script src="libs/jquery-ui.1.11.4.custom/jquery-ui.min.js"></script> -->
 	<script src="js/firebasetest.js"></script>
+	<script src="js/custom.js"></script>
 </body>
 </html>

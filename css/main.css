@@ -6,3 +6,11 @@
 	margin: 0;
 	padding: 0;
 }
+
+a.hover .taskItem {
+	color: red;
+}
+
+#reminder {
+	display: none;
+}

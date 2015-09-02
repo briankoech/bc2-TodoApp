@@ -13,3 +13,17 @@ $(function() {
 });
 	
 	
+$(".taskItem").mouseover(function() {
+
+});
+
+$(".datetimepicker").datetimepicker();
+
+$("#remCB").click(function() {
+	if($(this).is(":checked")) {
+		$("#reminder").show();
+	} 
+	else {
+		$("reminder").hide();
+	}
+});

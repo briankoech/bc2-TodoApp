@@ -1,17 +1,19 @@
-var myDataRef = new Firebase("https://todo-apps.firebaseio.com/");
+var myDataRef = new Firebase("https://todo-apps.firebaseio.com/users/brian/tasks");
 $("#btnSave").click(function() {
 	console.log("I have been Clicked");
+	var date = new Date();
 
 	var taskId = 1;
 	var taskTitle = $("#taskTitle").val();
 	var taskDescription = $("#taskDescription").val();
-	var dateCreated = "10-10-10";
-	var dateUpdated = "10-10-10";
+	var dateCreated = date.getTime();
+	var dateUpdated = date.getTime();
 	var userId = 1;
 	var visibility = true;
-	var priority = 5;
-	var actionDate = "10-10-2013";
-	var reminderDate = "10-10-2013";
+	var priority = $(".priorityCB:checked").val();
+	var actionDate = $("#taskDate").val();
+	var reminderDate = $("#remDate").val();
+	var username = "brian";
 
 // May use push instead of set
 	myDataRef.push(
@@ -23,27 +25,47 @@ $("#btnSave").click(function() {
 		dateUpdated : dateUpdated,
 		userId : userId,
 		visibility : true,
-		priority : 5,
+		priority : priority,
 		actionDate : actionDate,
-		reminderDate : actionDate
+		reminderDate : actionDate,
+		username : username
 	});
 
+	clearFields();
 	console.log("Data sent!!");
   
 });
 
 
-
-
 var wait = myDataRef.on('child_added', function(snapshot) {
 		var mytask = snapshot.val();
-		console.log(mytask);
-		displayTask(mytask.taskTitle, mytask.taskDescription);	
+		console.log(mytask +"on: " + mytask.taskTitle + " " + mytask.taskDescription);
+		displayTask(mytask.taskTitle, mytask.taskDescription, mytask.priority);	
 });
 
-function displayTask(title, desc) {
-	$("#tab1").prepend('<a href="#" class="list-group-item">'+ title+' <p> '+ desc+'</p>'+'</a>');
-	console.log("Title: " + title + " Discreption: " + desc);
+function displayTask(title, desc, priority) {
+
+	if(priority === "1") {
+		$("#tab1").prepend('<a href="#" class="list-group-item"><h4>'+ title+'</h4> <p> '+ desc+'</p>'+'</a>');
+		console.log("Title: " + title + " Discreption: " + desc);
+	}
+	else if(priority === "2") {
+		$("#tab2").prepend('<a href="#" class="list-group-item"><h4>'+ title+'</h4> <p> '+ desc+'</p>'+'</a>');
+		console.log("Title: " + title + " Discreption: " + desc);
+	}
+	else if(priority === "3"){
+		$("#tab3").prepend('<a href="#" class="list-group-item"><h4>'+ title+'</h4> <p> '+ desc+'</p>'+'</a>');
+		console.log("Title: " + title + " Discreption: " + desc);
+	} 
+	else {
+		alert("No priority");
+	}
+	
+	
 }
 
-wait;
+//wait;
+
+function clearFields() {
+	$("#taskForm").trigger("reset");
+}
