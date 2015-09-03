@@ -1,5 +1,5 @@
-console.log($.cookie('userID'));
-var userID = "88b51674-0138-4140-90ee-4fcee712ef26";
+// console.log($.cookie('userID'));
+var userID = $.cookie('userID');
 
 var myDataRef = new Firebase("https://todo-apps.firebaseio.com/users/" + userID);
 
@@ -86,14 +86,24 @@ myDataRef.child('tasks').on('value', function(snapshot) {
 				
 			}
 			else if (mytask[key].priority === "2") {
-				$("#tab2").prepend('');
+				if(diffFromToday == 0 || diffFromToday == 1 || diffFromToday == diffFromRem){
+					// this is the task action date
+					medium_count++;
+				}
+				$("#tab2").prepend('<div class="row"><div class="col-md-11"><a  id="task" href="#" class="list-group-item"><div class="col-md-2">'+actionDate+ '</div><div class="col-md-4">' +title+ '</div><div class="col-md-6">' +desc+'</div></a></div><div class="col-md-1"><button onclick="delete_data(\''+key+'\')" class="btn btn-danger btn-lg"><i class="fa fa-trash"></i></button></div></div>');
 			} 
 			else {
-				$("#tab3").prepend('');
+				if(diffFromToday == 0 || diffFromToday == 1 || diffFromToday == diffFromRem){
+					// this is the task action date
+					low_count++;
+				}
+				$("#tab3").prepend('<div class="row"><div class="col-md-11"><a  id="task" href="#" class="list-group-item"><div class="col-md-2">'+ actionDate+ '</div><div class="col-md-4">' +title+ '</div><div class="col-md-6">' +desc+'</div></a></div><div class="col-md-1"><button onclick="delete_data(\''+key+'\')" class="btn btn-danger btn-lg"><i class="fa fa-trash"></i></button></div></div>');
 			}
 		}
 
 		$('.high_p').html(high_count);
+		$('.medium_p').html(medium_count);
+		$('.low_p').html(low_count);
 
 			
 });
@@ -179,4 +189,9 @@ function delete_data(key){
 			alert("Delete successful");
 		}
 	});
+}
+function logout()
+{
+	$.removeCookie('userID');
+	window.location.replace('./login.html');
 }

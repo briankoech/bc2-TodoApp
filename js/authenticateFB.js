@@ -29,7 +29,7 @@ function Authentication() {
 				this.userID = authData.uid;
 				
 				$.cookie('userID', this.userID);
-				alert('foo');
+				window.location.replace('./home.html');
 				//callback on register and cdobReg()
 				// cbOnReg && cbOnReg(true);
 			}
