@@ -27,9 +27,9 @@ function Authentication() {
 
 				//set userID to authData.uid;
 				this.userID = authData.uid;
-				console.log(this.userID);
 				
-				showHomePage();
+				$.cookie('userID', this.userID);
+				alert('foo');
 				//callback on register and cdobReg()
 				// cbOnReg && cbOnReg(true);
 			}

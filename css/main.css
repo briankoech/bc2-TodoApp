@@ -31,5 +31,16 @@ li.task {
 	border-bottom: 1px solid #615161;
 	border-radius: 5px;
 }
-
+.note {
+	background-color: red;
+}
+a.list-group-item {
+    color: #555555;
+    padding: 20;
+    margin: 5;
+    display: inherit;
+}
+i {
+	display: inline;
+}
 

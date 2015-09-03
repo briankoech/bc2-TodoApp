@@ -24,7 +24,7 @@ $("#remCB").click(function() {
 		$("#reminder").show();
 	} 
 	else {
-		$("reminder").hide();
+		$("#reminder").hide();
 	}
 });
 
