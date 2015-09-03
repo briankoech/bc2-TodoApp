@@ -28,7 +28,8 @@ function Authentication() {
 				//set userID to authData.uid;
 				this.userID = authData.uid;
 				console.log(this.userID);
-			
+				
+				showHomePage();
 				//callback on register and cdobReg()
 				// cbOnReg && cbOnReg(true);
 			}
@@ -79,4 +80,9 @@ function Authentication() {
 		return true;
 	};
 
+}
+
+function showHomePage() {
+	$("#homepage").show();
+	$("#loginpage").hide();
 }

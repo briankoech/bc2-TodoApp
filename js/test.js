@@ -39,6 +39,8 @@ $("#login-submit").click(function() {
 	
 });
 
-function taskmodal(key) {
-	$("#taskModal").modal();
-};
+
+$("#btnlogout").click(function() {
+	authenticate.logout();
+	//show th login page
+});
