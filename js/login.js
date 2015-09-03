@@ -48,3 +48,20 @@ $("#login-submit").click(function() {
 	
 });
 
+// ===================//
+
+	var username = $("").val();
+	var pswd = $("").val();
+
+	var userObj = {
+		username: username,
+		password: pswd
+	};
+
+	var username = '';
+	var pswd = '';
+
+	authService.loginWithPW(userObj, function() {
+		// go to dashboard
+	});
+//==================//

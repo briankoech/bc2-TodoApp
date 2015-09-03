@@ -1,4 +1,8 @@
-var myDataRef = new Firebase("https://todo-apps.firebaseio.com/users/brian/tasks");
+
+var userID = "88b51674-0138-4140-90ee-4fcee712ef26";
+
+var myDataRef = new Firebase("https://todo-apps.firebaseio.com/users/" + userID);
+
 $("#btnSave").click(function() {
 	console.log("I have been Clicked");
 	var date = new Date();
@@ -13,10 +17,10 @@ $("#btnSave").click(function() {
 	var priority = $(".priorityCB:checked").val();
 	var actionDate = $("#taskDate").val();
 	var reminderDate = $("#remDate").val();
-	var username = "brian";
 
 // May use push instead of set
-	myDataRef.push(
+	var myref = myDataRef.child('tasks');
+	myref.push(
 	{
 		taskId : taskId,
 		taskTitle : taskTitle,
@@ -27,44 +31,71 @@ $("#btnSave").click(function() {
 		visibility : true,
 		priority : priority,
 		actionDate : actionDate,
-		reminderDate : actionDate,
-		username : username
+		reminderDate : actionDate
 	});
-
 	clearFields();
 	console.log("Data sent!!");
   
 });
 
-
-var wait = myDataRef.on('child_added', function(snapshot) {
+myDataRef.child('tasks').on('value', function(snapshot) {
+		$("#tab1").html('');
+		$("#tab2").html('');
+		$("#tab3").html('');
 		var mytask = snapshot.val();
-		console.log(mytask +"on: " + mytask.taskTitle + " " + mytask.taskDescription);
-		displayTask(mytask.taskTitle, mytask.taskDescription, mytask.priority);	
+		var key = snapshot.key();
+		// console.log(mytask);
+
+		for(var key in mytask){
+			// console.log(mytask[key].taskTitle, mytask[key].taskDescription, mytask[key].priority);
+			if (mytask[key].priority === "1") {
+				console.log(mytask[key].taskTitle, mytask[key].taskDescription, mytask[key].priority)
+				
+				$("#tab1").prepend('<a  id="task" onClick=taskmodal("'+ key +'") class="list-group-item"><div class="row"><div class="col-md-4">' + mytask[key].actionDate +'</div><div class="col-md-4">' + mytask[key].taskTitle+ '</div><div class="col-md-4">' +mytask[key].reminderDate+ '</div></div></a>');
+
+			}
+			else if (mytask[key].priority === "2") {
+				console.log(mytask[key].taskTitle, mytask[key].taskDescription, mytask[key].priority)
+				$("#tab2").prepend('<a  id="task" href="#" class="list-group-item"><div class="row"><div class="col-md-4">' + mytask[key].actionDate +'</div><div class="col-md-4">' + mytask[key].taskTitle+ '</div><div class="col-md-4">' + mytask[key].reminderDate+ '</div></div></a>');
+
+			} 
+			else {
+				console.log(mytask[key].taskTitle, mytask[key].taskDescription, mytask[key].priority);
+				$("#tab3").prepend('<a  id="task" href="#" class="list-group-item"><div class="row"><div class="col-md-4">' + mytask[key].actionDate +'</div><div class="col-md-4">' + mytask[key].taskTitle+ '</div><div class="col-md-4">' + mytask[key].reminderDate+ '</div></div></a>');
+			}
+		}
+
+			
 });
-
-function displayTask(title, desc, priority) {
-
-	if(priority === "1") {
-		$("#tab1").prepend('<a href="#" class="list-group-item"><h4>'+ title+'</h4> <p> '+ desc+'</p>'+'</a>');
-		console.log("Title: " + title + " Discreption: " + desc);
-	}
-	else if(priority === "2") {
-		$("#tab2").prepend('<a href="#" class="list-group-item"><h4>'+ title+'</h4> <p> '+ desc+'</p>'+'</a>');
-		console.log("Title: " + title + " Discreption: " + desc);
-	}
-	else if(priority === "3"){
-		$("#tab3").prepend('<a href="#" class="list-group-item"><h4>'+ title+'</h4> <p> '+ desc+'</p>'+'</a>');
-		console.log("Title: " + title + " Discreption: " + desc);
-	} 
-	else {
-		alert("No priority");
-	}
-	
-	
-}
-
 //wait;
+
+
+var updateObj = function(key, obj) {
+	myDataRef.child(key).update(obj, function(error) {
+		if(error) {
+			console.log("error occurred");
+			return false;
+		} 
+		else {
+			console.log("Update successful");
+			return true;
+		}
+	});
+};
+
+var deleteObj = function(key) {
+	myDataRef.child(key).remove(function(error) {
+		if(error) {
+			console.log("Error on deleton" + error);
+			return false;
+		} else{
+			console.log("Deleted successfully!");
+			return true;
+		}
+	});
+
+
+};
 
 function clearFields() {
 	$("#taskForm").trigger("reset");
