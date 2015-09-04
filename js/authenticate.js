@@ -28,7 +28,7 @@ function Authentication() {
 				
 				//set cookie to save the session && redirect the user
 				$.cookie('userID', this.userID, { expires: 2 });
-				window.location.replace('./home.html');
+				window.location.replace('./index.html');
 			}
 		}.bind(this));
 

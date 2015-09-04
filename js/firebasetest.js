@@ -166,5 +166,5 @@ function delete_data(key){
 function logout()
 {
 	$.removeCookie('userID');
-	window.location.replace('./login.html');
+	window.location.replace('./index.html');
 }
