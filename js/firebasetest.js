@@ -1,4 +1,4 @@
-// console.log($.cookie('userID'));
+// Fetch the userID(cookie) cookie from the browser
 var userID = $.cookie('userID');
 
 var myDataRef = new Firebase("https://todo-apps.firebaseio.com/users/" + userID);
@@ -6,18 +6,16 @@ var myDataRef = new Firebase("https://todo-apps.firebaseio.com/users/" + userID)
 $("#btnSave").click(function() {
 	var date = new Date();
 
-	var taskId = 1;
 	var taskTitle = $("#taskTitle").val();
 	var taskDescription = $("#taskDescription").val();
 	var dateCreated = date.getTime();
 	var dateUpdated = date.getTime();
-	var userId = 1;
 	var visibility = true;
 	var priority = $(".priorityCB:checked").val();
 	var actionDate = $("#taskDate").val();
 	var reminderDate = $("#remDate").val();
 
-// May use push instead of set
+// push the object to the db: push sets a unique key for each entry
 	var myref = myDataRef.child('tasks');
 	myref.push(
 	{
@@ -30,25 +28,28 @@ $("#btnSave").click(function() {
 		actionDate : actionDate,
 		reminderDate : reminderDate
 	});
+
 	clearFields();
-	console.log("Data sent!!");
+	alert("Task Added!");
   
 });
 
 myDataRef.child('tasks').on('value', function(snapshot) {
-		// $("#tab1").html('');
+	// Clear data on the dom
+		$("#tab1").html('');
 		$("#tab2").html('');
 		$("#tab3").html('');
+
 		var mytask = snapshot.val();
 		var key = snapshot.key();
-		// console.log(mytask);
+
 		var low_count = 0;
 		var medium_count = 0;
 		var high_count = 0;
-		for(var key in mytask){
-			// console.log(mytask[key].taskTitle, mytask[key].taskDescription, mytask[key].priority);
+
+		for(var key in mytask) {
+
 			var today = new Date();
-			
 			var actiondate = new Date(mytask[key].actionDate);
 			var remdate = new Date(mytask[key].reminderDate);
 
@@ -60,9 +61,12 @@ myDataRef.child('tasks').on('value', function(snapshot) {
 			var date1 = today;
 			var date2 = actiondate;
 			var date3 = remdate;
+
+			// get time difference from today
 			var timeDiffFromToday = Math.abs(date2.getTime() - date1.getTime());
 			var diffFromToday = Math.ceil(timeDiffFromToday / (1000 * 3600 * 24));
 
+			// get time difference from reminder date
 			var timeDiffFromRem = Math.abs(date2.getTime() - date3.getTime());
 			var diffFromRem = Math.ceil(timeDiffFromRem / (1000 * 3600 * 24));
 
@@ -72,63 +76,49 @@ myDataRef.child('tasks').on('value', function(snapshot) {
 			// console.log('from today : '+ diffFromToday+' from reminder: '+diffFromRem);
 
 			if (mytask[key].priority === "1") {
+
 				if(diffFromToday == 0 || diffFromToday == 1 || diffFromToday == diffFromRem){
-					// this is the task action date
+					// this is the task action date so increment the notification
 					high_count++;
 				}
 			
-				var actionDate = mytask[key].actionDate;
-				var title = mytask[key].taskTitle;
-				var desc = mytask[key].taskDescription;
-				var key = key;
 				$("#tab1").prepend('<div class="row"><div class="col-md-11"><a  id="task" href="#" class="list-group-item"><div class="col-md-2">'+
-														actionDate+ '</div><div class="col-md-4">' +title+ '</div><div class="col-md-6">' +desc+'</div></a></div><div class="col-md-1"><button onclick="delete_data(\''+key+'\')" class="btn btn-danger btn-lg"><i class="fa fa-trash"></i></button></div></div>');
+														mytask[key].actionDate + '</div><div class="col-md-4">' + mytask[key].taskTitle + '</div><div class="col-md-6">' + mytask[key].taskDescription +'</div></a></div><div class="col-md-1"><button onclick="delete_data(\''+key+'\')" class="btn btn-danger btn-lg"><i class="fa fa-trash"></i></button></div></div>');
 				
 			}
 			else if (mytask[key].priority === "2") {
+
 				if(diffFromToday == 0 || diffFromToday == 1 || diffFromToday == diffFromRem){
-					// this is the task action date
+					// this is the task action date so increment the notification
 					medium_count++;
 				}
-				$("#tab2").prepend('<div class="row"><div class="col-md-11"><a  id="task" href="#" class="list-group-item"><div class="col-md-2">'+actionDate+ '</div><div class="col-md-4">' +title+ '</div><div class="col-md-6">' +desc+'</div></a></div><div class="col-md-1"><button onclick="delete_data(\''+key+'\')" class="btn btn-danger btn-lg"><i class="fa fa-trash"></i></button></div></div>');
+
+				$("#tab2").prepend('<div class="row"><div class="col-md-11"><a  id="task" href="#" class="list-group-item"><div class="col-md-2">' + mytask[key].actionDate + '</div><div class="col-md-4">' + mytask[key].taskTitle + '</div><div class="col-md-6">' + mytask[key].taskDescription +'</div></a></div><div class="col-md-1"><button onclick="delete_data(\''+key+'\')" class="btn btn-danger btn-lg"><i class="fa fa-trash"></i></button></div></div>');
 			} 
 			else {
 				if(diffFromToday == 0 || diffFromToday == 1 || diffFromToday == diffFromRem){
-					// this is the task action date
+					// this is the task action date so increment the notification
 					low_count++;
 				}
-				$("#tab3").prepend('<div class="row"><div class="col-md-11"><a  id="task" href="#" class="list-group-item"><div class="col-md-2">'+ actionDate+ '</div><div class="col-md-4">' +title+ '</div><div class="col-md-6">' +desc+'</div></a></div><div class="col-md-1"><button onclick="delete_data(\''+key+'\')" class="btn btn-danger btn-lg"><i class="fa fa-trash"></i></button></div></div>');
+				$("#tab3").prepend('<div class="row"><div class="col-md-11"><a  id="task" href="#" class="list-group-item"><div class="col-md-2">'+ mytask[key].actionDate + '</div><div class="col-md-4">' + mytask[key].taskTitle + '</div><div class="col-md-6">' + mytask[key].taskDescription +'</div></a></div><div class="col-md-1"><button onclick="delete_data(\''+key+'\')" class="btn btn-danger btn-lg"><i class="fa fa-trash"></i></button></div></div>');
 			}
 		}
 
 		$('.high_p').html(high_count);
 		$('.medium_p').html(medium_count);
 		$('.low_p').html(low_count);
+		$(".note").html(high_count + medium_count + low_count);
 
 			
 });
-//wait;
 
-var deleteObj = function(key) {
-	myDataRef.child(key).remove(function(error) {
-		if(error) {
-			console.log("Error on deleton" + error);
-			return false;
-		} else{
-			console.log("Deleted successfully!");
-			return true;
-		}
-	});
-
-
-};
 
 function clearFields() {
 	$("#taskForm").trigger("reset");
 }
 
 
-
+/*
 $("#btnupdate").click(function() {
 	var taskTitle = $("#title").val();
 	var taskDescription = $("#description").val();
@@ -159,26 +149,8 @@ $("#btnupdate").click(function() {
 	});
 });
 
-$("#btndelete").click(function() {
-	// var key $("div").name;
-	myDataRef.child('tasks').child("'"+ key +"'").remove(function(error) {
-		if(error) {
-			alert("Unable to delete");
-		}
-		else {
-			alert("Delete successful");
-		}
-	});
+*/
 
-});
-
-function reminder() {
-	var date = new Date();
-
-
-
-
-}
 function delete_data(key){
 	
 	myDataRef.child('tasks').child(key).remove(function(error) {
@@ -186,10 +158,11 @@ function delete_data(key){
 			alert("Unable to delete");
 		}
 		else {
-			alert("Delete successful");
+			alert("Deleted successfully");
 		}
 	});
 }
+
 function logout()
 {
 	$.removeCookie('userID');

@@ -1,3 +1,4 @@
+<!DOCTYPE>
 <html>
 <head>
 	<title>Todo App</title>
@@ -49,7 +50,7 @@
 	<div class="container">
     <div class="row">
 		<div class="col-md-12">
-		<button type="button" class="btn btn-info pull-right"><i class="fa fa-bell-o"></i>Notification<span class="badge note">9</span></button>
+		<button type="button" class="btn btn-info pull-right"><i class="fa fa-bell-o"></i>Notification<span class="badge note">0</span></button>
 		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add new Task  <i class="fa fa-plus-circle"></i></button>
 
 			<!-- Add New Task Modal Window -->
@@ -64,16 +65,16 @@
 			        <form id="taskForm">
 			        	<div class="form-group">
 						    <label for="taskTitle">Task Title</label>
-						    <input type="text" class="form-control" id="taskTitle" placeholder="Title">
+						    <input type="text" class="form-control" id="taskTitle" placeholder="Title" required>
 						 </div>
 						 <div class="form-group">
 						    <label for="taskDescription">Task Description</label>
-						    <textarea type="text" class="form-control" id="taskDescription" rows="3" placeholder="Description"></textarea>
+						    <textarea type="text" class="form-control" id="taskDescription" rows="3" placeholder="Description" required></textarea>
 						 </div>
 						 <div class="form-group">
 						    <label class="radio-inline"><input class="priorityCB" type="radio" name="optradio" value="1">High Priority</label>
 							<label class="radio-inline"><input class="priorityCB" type="radio" name="optradio" value="2">Medium Priority</label>
-							<label class="radio-inline"><input class="priorityCB" type="radio" name="optradio" value="3">Low Priority</label> 
+							<label class="radio-inline"><input class="priorityCB" type="radio" name="optradio" value="3" checked="true">Low Priority</label> 
 						 </div>
 
 						  <div class="form-group">
@@ -82,7 +83,7 @@
 						       						    
 						 </div>
 						 <div class="form-group">
-						 	  <label for="remCB"><input type="checkbox" name="remCB" id="remCB"> Set Reminder</label>
+						 	  <label for="remCB"><input type="checkbox" name="remCB" id="remCB" required> Set Reminder</label>
 						 </div>
 						  <div class="form-group" id="reminder">
 						    <label for="reminder">Reminder Date & Time</label>
@@ -92,7 +93,7 @@
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			        <button type="button" class="btn btn-primary" id="btnSave">Save Task</button>
+			        <button type="submit" class="btn btn-primary" id="btnSave">Save Task</button>
 			      </div>
 			    </div>
 			  </div>
@@ -106,15 +107,15 @@
 					<ul class="nav nav-tabs ">
 						<li class="active">
 							<a href="#tab1" data-toggle="tab"><i class="fa fa-tasks"></i>
-							High Priority <span class="badge high_p">4</span></a>
+							High Priority <span class="badge high_p">0</span></a>
 						</li>
 						<li>
 							<a href="#tab2" data-toggle="tab">
-							Medium Priority <span class="badge medium_p">10</span></a>
+							Medium Priority <span class="badge medium_p">0</span></a>
 						</li>
 						<li>
 							<a href="#tab3" data-toggle="tab">
-							Low Priority <span class="badge low_p">1</span></a>
+							Low Priority <span class="badge low_p">0</span></a>
 						</li>
 					</ul>
 					<div class="tab-content">
@@ -179,15 +180,12 @@
 	 
 	 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script> 
-	 
 	 <script src="libs/jqtimepicker/jquery.datetimepicker.js"></script>
 	 <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
-	<!--  // <script src="libs/bootstrap/bootstrap.min.js"></script>
-	 // <script src="libs/jquery-ui.1.11.4.custom/jquery-ui.min.js"></script> -->
-	 <script src="js/authenticateFB.js"></script>
+	 <script src="js/authenticate.js"></script>
 	<script src="js/firebasetest.js"></script>
 	<script src="js/custom.js"></script>
-	<script src="js/test.js"></script>
+	<script src="js/loginBtns.js"></script>
 
 	
 </body>
